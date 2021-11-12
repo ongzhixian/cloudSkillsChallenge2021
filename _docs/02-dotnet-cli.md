@@ -39,3 +39,14 @@ http://localhost:5000/api/priceframe/6/17
 dotnet add package Swashbuckle.AspNetCore
 
 http://localhost:5000/swagger/v1/swagger.json
+
+
+----------------
+
+
+
+DESKTOP-NJM00MP>zhixian D:\src\github\cloudSkillsChallenge2021\dotnetMicroServices\backend (main)
+PS> docker build -t pizzabackend .
+
+docker run -it --rm -p 5200:80 --name pizzabackendcontainer pizzabackend
+http://localhost:5200/pizzainfo
