@@ -31,3 +31,11 @@ Razor component file names require a capitalized first letter.
 Open the Pages folder and confirm that the Todo component file name starts with a capital letter T. 
 The file name should be Todo.razor.
 
+----------------
+
+PrintFramerAPI
+http://localhost:5000/api/priceframe/6/17
+
+dotnet add package Swashbuckle.AspNetCore
+
+http://localhost:5000/swagger/v1/swagger.json
