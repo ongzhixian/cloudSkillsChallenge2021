@@ -43,6 +43,7 @@ http://localhost:5000/swagger/v1/swagger.json
 
 ----------------
 
+Microservices / Docker 101
 
 
 DESKTOP-NJM00MP>zhixian D:\src\github\cloudSkillsChallenge2021\dotnetMicroServices\backend (main)
@@ -50,3 +51,84 @@ PS> docker build -t pizzabackend .
 
 docker run -it --rm -p 5200:80 --name pizzabackendcontainer pizzabackend
 http://localhost:5200/pizzainfo
+
+
+build the container images:
+`docker-compose build`
+
+Start both the website and the web API,
+`docker-compose up`
+
+------------------
+
+Kubernetes
+
+docker-compose build
+docker-compose up
+http://localhost:5902
+
+docker login
+docker tag pizzafrontend zhixian/pizzafrontend
+docker tag pizzabackend zhixian/pizzabackend
+
+docker push zhixian/pizzafrontend
+docker push zhixian/pizzabackend
+
+(
+    Requirement: Kubernetes cluster!
+    Using the standalone Kubernetes server and client thats packaged with Docker Desktop.
+    See: https://docs.docker.com/desktop/kubernetes/
+
+)
+kubectl config get-contexts
+kubectl config use-context docker-desktop
+
+
+kubectl apply -f backend-deploy.yml
+kubectl apply -f frontend-deploy.yml
+    tell Kubernetes to run the file we just created;
+    kubectl apply command will return quickly, but the container creation may take a while
+
+kubectl get pods
+    View progress of containers being build.
+
+PS> kubectl get pods
+NAME                             READY   STATUS    RESTARTS   AGE
+pizzabackend-587f9f56ff-rd8cv    1/1     Running   0          80s
+pizzafrontend-68b9f89578-5jvz8   1/1     Running   0          60s
+
+
+kubectl scale --replicas=5 deployment/pizzabackend
+    scale up to 5 instances
+
+PS> kubectl get pods
+NAME                             READY   STATUS              RESTARTS   AGE
+pizzabackend-587f9f56ff-256cn    0/1     ContainerCreating   0          5s
+pizzabackend-587f9f56ff-hlx4q    0/1     ContainerCreating   0          5s
+pizzabackend-587f9f56ff-j5w5q    0/1     ContainerCreating   0          5s
+pizzabackend-587f9f56ff-rd8cv    1/1     Running             0          113s
+pizzabackend-587f9f56ff-xktqb    0/1     ContainerCreating   0          5s
+pizzafrontend-68b9f89578-5jvz8   1/1     Running             0          93s
+
+
+kubectl scale --replicas=1 deployment/pizzabackend
+    scale it down to 1 instance
+
+PS> kubectl get pods
+NAME                             READY   STATUS        RESTARTS   AGE
+pizzabackend-587f9f56ff-256cn    0/1     Terminating   0          70s
+pizzabackend-587f9f56ff-hlx4q    1/1     Terminating   0          70s
+pizzabackend-587f9f56ff-j5w5q    0/1     Terminating   0          70s
+pizzabackend-587f9f56ff-rd8cv    1/1     Running       0          2m58s
+pizzabackend-587f9f56ff-xktqb    1/1     Terminating   0          70s
+pizzafrontend-68b9f89578-5jvz8   1/1     Running       0          2m38s
+
+PS> kubectl get pods
+NAME                             READY   STATUS    RESTARTS   AGE
+pizzabackend-587f9f56ff-rd8cv    1/1     Running   0          3m40s
+pizzafrontend-68b9f89578-5jvz8   1/1     Running   0          3m20s
+
+
+Kubernetes Resiliency
+
+kubectl delete pod pizzafrontend-68b9f89578-5jvz8

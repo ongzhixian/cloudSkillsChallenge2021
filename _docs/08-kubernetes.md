@@ -26,3 +26,7 @@ These tasks include:
 
 Because Kuberentes is a tool to orchestrate containerized workloads, 
 and you can deploy .NET microservices into containers, you can use Kubernetes to orchestrate your .NET microservices. 
+
+
+Kubernetes runs containers for you. 
+You describe what you want Kubernetes to do through a YAML file.
