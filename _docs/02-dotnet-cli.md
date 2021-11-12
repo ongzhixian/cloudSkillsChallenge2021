@@ -18,3 +18,16 @@ dotnet tool install -g Microsoft.dotnet-httprepl
 
 Usage:
 httprepl https://localhost:{PORT}
+
+------------------
+
+DESKTOP-NJM00MP>zhixian D:\src\github\cloudSkillsChallenge2021\BlazorApp (main)
+PS> dotnet new blazorserver
+The template "Blazor Server App" was created successfully
+
+dotnet new razorcomponent -n Todo -o Pages
+
+Razor component file names require a capitalized first letter. 
+Open the Pages folder and confirm that the Todo component file name starts with a capital letter T. 
+The file name should be Todo.razor.
+
